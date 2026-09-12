@@ -10,7 +10,7 @@ const APP_SHELL = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
-  "/faviconn-clean.png",
+  "/faviconn.png",
 ];
 
 self.addEventListener("install", (event) => {

@@ -21,20 +21,7 @@ photo, just replace that file (keep the same name), or change the
 `url("/background.jpg")` in `src/App.css` under `.hero__backdrop` if
 you rename it.
 
-## Edit your playlist
 
-Open `src/data/playlist.js` and paste your YouTube playlist link (or
-just the playlist ID) into `PLAYLIST_SOURCE`:
-
-```js
-export const PLAYLIST_SOURCE =
-  "https://www.youtube.com/playlist?list=YOUR_PLAYLIST_ID";
-```
-
-The whole playlist loads into the bar automatically — track titles,
-channel names, and thumbnails are pulled live from YouTube, so there's
-nothing else to type in by hand. Prev/Next move through the real
-playlist order, and opening the ⌃ panel shows every track in it.
 
 ## About ads
 

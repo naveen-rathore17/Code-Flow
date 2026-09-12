@@ -536,7 +536,7 @@
   .credit {
     right: 50%;
     transform: translateX(50%);
-    bottom: 116px;
+    bottom: 130px;
     width: max-content;
     max-width: calc(100vw - 24px);
     font-size: 10.5px;

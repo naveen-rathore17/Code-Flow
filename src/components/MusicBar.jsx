@@ -159,6 +159,58 @@ export default function MusicBar() {
     };
   }, []);
 
+    // Media Session: gives the OS lock-screen / notification media controls
+  // and tells the browser "this is real media playback" — this is what
+  // makes Android Chrome more willing to keep audio alive when the tab
+  // is backgrounded or the screen is locked. It does NOT guarantee
+  // background playback (that depends on the browser/OS), but it's the
+  // single biggest improvement possible while still using the YouTube
+  // iframe player.
+  useEffect(() => {
+    if (!("mediaSession" in navigator)) return;
+
+    navigator.mediaSession.setActionHandler("play", () => {
+      playerRef.current?.playVideo();
+    });
+    navigator.mediaSession.setActionHandler("pause", () => {
+      playerRef.current?.pauseVideo();
+    });
+    navigator.mediaSession.setActionHandler("previoustrack", () => {
+      playerRef.current?.previousVideo();
+    });
+    navigator.mediaSession.setActionHandler("nexttrack", () => {
+      playerRef.current?.nextVideo();
+    });
+
+    return () => {
+      navigator.mediaSession.setActionHandler("play", null);
+      navigator.mediaSession.setActionHandler("pause", null);
+      navigator.mediaSession.setActionHandler("previoustrack", null);
+      navigator.mediaSession.setActionHandler("nexttrack", null);
+    };
+  }, []);
+
+  // Keep the OS media-control UI (and its notion of playing/paused) in
+  // sync with the actual player state and current track.
+  useEffect(() => {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.playbackState = playing ? "playing" : "paused";
+  }, [playing]);
+
+  useEffect(() => {
+    if (!("mediaSession" in navigator)) return;
+    const currentId = videoIds[currentIndex];
+    if (!currentId) return;
+    const info = meta[currentId];
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: info?.title || "CodeFlow",
+      artist: info?.artist || "CodeFlow radio",
+      artwork: [
+        { src: `https://i.ytimg.com/vi/${currentId}/mqdefault.jpg`, sizes: "320x180", type: "image/jpeg" },
+      ],
+    });
+  }, [videoIds, currentIndex, meta]);
+
   // poll playback progress
   useEffect(() => {
     const id = setInterval(() => {

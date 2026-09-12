@@ -142,7 +142,7 @@
         rgba(14, 17, 22, 0.25) 55%,
         rgba(14, 17, 22, 0.55) 100%
       ),
-      url("/mobile-bgg.png");
+      url("/mobile-bgg-150kb.jpeg");
 
     background-size: cover;
     background-position: center center;
